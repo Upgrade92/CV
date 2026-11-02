@@ -6,8 +6,9 @@
 <!-- BOOT INTRO: activates before first paint, automatically bypassed for reduced motion or deep links. -->
 <script>
 (function () {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || location.hash) return;
-  window.__CZ_BOOT_STARTED_AT = performance.now();
+  // Only skip actual content deep links. A normal mobile visit should always run the intro.
+  const contentDeepLink = /^#(?:main|profil|skills|laufbahn|kontakt)$/i.test(location.hash);
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || contentDeepLink) return;
   document.documentElement.classList.add('boot-mode');
   window.__CZ_BOOT_GUARD = setTimeout(function () {
     document.documentElement.classList.remove('boot-mode', 'boot-exiting');
@@ -16,7 +17,7 @@
       element.removeAttribute('data-boot-locked');
     });
     document.getElementById('bootScreen')?.remove();
-  }, 3000);
+  }, 9000); // Emergency fallback only; the visible animation manages its own 3s deadline.
 }());
 </script>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -245,7 +246,8 @@ html[data-bs-theme='light'] .tech-chips span { color: #08746c; }
 .ai-core span { transform: rotate(-45deg); font: 730 64px var(--display); letter-spacing: -.12em; color: var(--mint); }
 .ai-core i { width: 8px; height: 8px; border-radius: 2px; background: var(--mint); position: absolute; box-shadow: 0 0 14px var(--mint); }
 .ai-core i:first-child { top: -4px; left: 50%; }.ai-core i:nth-child(2) { bottom: -4px; left: 50%; }.ai-core i:nth-child(3) { left: -4px; top: 50%; }.ai-core i:nth-child(4) { right: -4px; top: 50%; }
-.eng-gear { position: relative; z-index: 1; font: 260px/1 sans-serif; color: var(--mint); opacity: .7; animation: ring-turn 42s linear infinite; text-shadow: 0 0 40px rgba(108,232,217,.1); }
+.eng-gear { position: relative; z-index: 1; width: 240px; aspect-ratio: 1; color: var(--mint); opacity: .7; animation: ring-turn 42s linear infinite; filter: drop-shadow(0 0 18px rgba(108,232,217,.2)); }
+.eng-gear svg { display: block; width: 100%; height: 100%; }
 .carousel-controls { padding: 18px 27px 18px 31px; min-height: 75px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .slide-pagination { font: 680 13px var(--mono); display: flex; align-items: center; gap: 12px; color: var(--faint); }
 .slide-pagination #slideIndex { color: var(--mint); font-size: 18px; }
@@ -407,7 +409,7 @@ html[data-bs-theme='light'] .contact-box { color: #eaf4f6; }
   .web-braces { font-size: 79px; }
   .slide-art-ai .ai-core { width: 110px; height: 110px; border-radius: 22px; }
   .ai-core span { font-size: 43px; }
-  .eng-gear { font-size: 145px; }
+  .eng-gear { width: 168px; }
   .carousel-hud { padding-inline: 25px; }
   .carousel-hud > span:last-child { display: none; }
   .all-skills { align-items: flex-start; }
@@ -470,7 +472,7 @@ html[data-bs-theme='light'] .contact-box { color: #eaf4f6; }
   .orbit-inner { width: 94px; height: 94px; font-size: 48px; }
   .slide-art::after { width: 165px; height: 165px; }
   .web-braces { font-size: 66px; }
-  .eng-gear { font-size: 119px; }
+  .eng-gear { width: 138px; }
   .carousel-controls { padding: 15px 17px; gap: 8px; }
   .control-arrow { width: 35px; height: 35px; }
   .carousel-dots { gap: 5px; }
@@ -933,7 +935,7 @@ html.boot-ready .boot-orbit { border-color: rgba(112,234,220,.52); }
 <article class="skill-slide skill-slide-ai"><div class="skill-slide-content"><span class="slide-kicker" data-i18n="slideKicker3">03 / AI &amp; TOOLING</span><div class="slide-badge" data-i18n="slideBadge3">WORKFLOW</div><h3>AI<span class="title-dot">.</span><span class="slide-subtitle" data-i18n="slideSubtitle3">&amp; Tooling</span></h3><p data-i18n="slideDesc3">Fortgeschrittene Nutzung von AI-Tools; ergänzt durch Linux, JIRA und Datenbankkenntnisse.</p><div class="tech-chips"><span>Advanced AI Handling</span><span>Linux</span><span>JIRA</span><span data-i18n="chipDatabase">Datenbanken</span></div></div><div aria-hidden="true" class="slide-art slide-art-ai"><div class="ai-core"><i></i><i></i><i></i><i></i><span>AI</span></div><span class="art-coordinate">{ 003 }</span></div></article>
 </div>
 <div class="carousel-item">
-<article class="skill-slide skill-slide-eng"><div class="skill-slide-content"><span class="slide-kicker" data-i18n="slideKicker4">04 / ENGINEERING ROOTS</span><div class="slide-badge" data-i18n="slideBadge4">FOUNDATION</div><h3>Tech<span class="title-dot">.</span><span class="slide-subtitle" data-i18n="slideSubtitle4">Engineering</span></h3><p data-i18n="slideDesc4">Lehre in Maschinenbau- und Elektrotechnik, Industrieerfahrung sowie Grundlagen in Pneumatik.</p><div class="tech-chips"><span data-i18n="chipElectrical">Elektrotechnik</span><span data-i18n="chipMechanical">Maschinenbau</span><span data-i18n="chipPneumatics">Pneumatik</span><span data-i18n="chipMaintenance">Instandhaltung</span></div></div><div aria-hidden="true" class="slide-art slide-art-eng"><div class="eng-gear">✳</div><span class="art-coordinate">{ 004 }</span></div></article>
+<article class="skill-slide skill-slide-eng"><div class="skill-slide-content"><span class="slide-kicker" data-i18n="slideKicker4">04 / ENGINEERING ROOTS</span><div class="slide-badge" data-i18n="slideBadge4">FOUNDATION</div><h3>Tech<span class="title-dot">.</span><span class="slide-subtitle" data-i18n="slideSubtitle4">Engineering</span></h3><p data-i18n="slideDesc4">Lehre in Maschinenbau- und Elektrotechnik, Industrieerfahrung sowie Grundlagen in Pneumatik.</p><div class="tech-chips"><span data-i18n="chipElectrical">Elektrotechnik</span><span data-i18n="chipMechanical">Maschinenbau</span><span data-i18n="chipPneumatics">Pneumatik</span><span data-i18n="chipMaintenance">Instandhaltung</span></div></div><div aria-hidden="true" class="slide-art slide-art-eng"><div class="eng-gear"><svg viewBox="0 0 200 200" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="square"><path d="M100 20V180 M20 100H180 M43.4 43.4L156.6 156.6 M156.6 43.4L43.4 156.6"/></g></svg></div><span class="art-coordinate">{ 004 }</span></div></article>
 </div>
 </div>
 </div>
@@ -1582,11 +1584,12 @@ window.CZ_TRANSLATIONS = {
     return;
   }
 
-  const start = window.__CZ_BOOT_STARTED_AT || performance.now();
+  // Start when the boot UI has actually initialized, not while a slower phone parses HTML.
+  // This prevents the 3-second head fallback from swallowing the entire animation.
+  const start = performance.now();
   const elapsed = () => performance.now() - start;
 
-  // All timing values refer to the instant the page starts loading.
-  // Sequence + transition finish before the 3000 ms safety guard.
+  // 3.0 seconds including the transition, measured from animation initialization.
   const STEP_PROGRESS = [16, 32, 49, 67, 85, 100];
   const READY_AT = 2140;
   const CLOSE_AT = 2560;
@@ -1642,8 +1645,11 @@ window.CZ_TRANSLATIONS = {
     if (!finished) root.classList.add('boot-exiting');
   }
 
-  // Stagger the six lines even when the standalone HTML takes longer to parse.
-  // The window compresses as needed; the absolute 3.0 s deadline never moves.
+  // Replace the early page-load guard with a guard relative to the visible boot sequence.
+  clearTimeout(window.__CZ_BOOT_GUARD);
+  window.__CZ_BOOT_GUARD = setTimeout(() => finish(), 3300);
+
+  // Run all six steps at comfortable intervals and close within 3.0 seconds.
   const firstStageAt = elapsed() + 45;
   const lastStageAt = Math.max(firstStageAt, READY_AT - 125);
   const gap = (lastStageAt - firstStageAt) / (STEP_PROGRESS.length - 1);
