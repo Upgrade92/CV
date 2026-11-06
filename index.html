@@ -566,6 +566,93 @@ html[data-bs-theme="light"] .lang-button[aria-pressed="true"] { color: #fff; }
   .lang-button { min-width: 32px; height: 30px; }
   .theme-toggle { width: 33px; height: 36px; }
 }
+
+/* =======================================================================
+   V2.4 / RESPONSIVE UX REFINEMENT
+   One shared visual centre for all four artwork types; text glyphs are not
+   used to draw the Web icon, avoiding platform-specific font metrics.
+   All controls have visible keyboard focus and generous vertical hit areas.
+   ======================================================================= */
+.slide-art {
+  background: radial-gradient(ellipse at 50% 50%, rgba(66,137,133,.14), transparent 57%);
+}
+.slide-art::before {
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000, transparent 75%);
+  mask-image: radial-gradient(circle at 50% 50%, #000, transparent 75%);
+}
+.slide-art::after {
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.slide-art > .slide-art-orbit,
+.slide-art > .web-braces,
+.slide-art > .ai-core,
+.slide-art > .eng-gear { justify-self: center; align-self: center; transform-origin: center; }
+.orbit-inner { letter-spacing: -.045em; }
+.ai-core span { letter-spacing: -.055em; }
+.web-braces {
+  width: 164px; height: 164px;
+  display: grid; place-items: center;
+  color: var(--mint);
+  font-size: initial; letter-spacing: normal;
+  transform: rotate(-5deg);
+  filter: drop-shadow(0 0 14px rgba(108,232,217,.12));
+  text-shadow: none;
+}
+.web-braces svg { display: block; width: 100%; height: 100%; }
+/* Keep the four visible pills but make their entire height clickable. */
+.carousel-dots { align-items: center; }
+.carousel-dots button {
+  position: relative;
+  width: 22px;
+  height: 40px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border-radius: 6px;
+  transition: width .25s ease;
+}
+.carousel-dots button::after {
+  content: '';
+  width: 100%; height: 4px;
+  background: var(--border-strong);
+  border-radius: 4px;
+  transition: background .2s ease;
+}
+.carousel-dots button.active { background: transparent; width: 46px; }
+.carousel-dots button.active::after { background: var(--mint); }
+.control-arrow { width: 44px; height: 44px; }
+.control-arrow:focus-visible,
+.carousel-dots button:focus-visible,
+.lang-button:focus-visible,
+.theme-toggle:focus-visible,
+.mobile-toggle:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 3px;
+}
+/* More forgiving touch targets in the compact mobile header. */
+.lang-button { min-height: 38px; }
+.theme-toggle { min-width: 40px; min-height: 40px; }
+.mobile-toggle { min-width: 42px; min-height: 42px; }
+@media (max-width: 767.98px) {
+  .web-braces { width: 134px; height: 134px; }
+}
+@media (max-width: 575.98px) {
+  .slide-art { height: 194px; }
+  .web-braces { width: 115px; height: 115px; }
+  .skill-slide-content { padding-bottom: 18px; }
+  .slide-kicker { font-size: 10px; }
+  .tech-chips span { font-size: 10px; }
+  .carousel-hud { font-size: 10px; }
+  .carousel-controls { gap: 6px; padding: 11px 13px; }
+  .carousel-dots { gap: 6px; }
+  .carousel-dots button { width: 20px; height: 40px; }
+  .carousel-dots button.active { width: 28px; }
+  .carousel-arrows { gap: 5px; }
+  .control-arrow { width: 38px; height: 40px; }
+}
 </style>
 <style id="boot-css">/* ================================================================
    CZ DIGITAL CV — BOOT INTRO (V2.3)
@@ -929,7 +1016,7 @@ html.boot-ready .boot-orbit { border-color: rgba(112,234,220,.52); }
 <article class="skill-slide skill-slide-csharp"><div class="skill-slide-content"><span class="slide-kicker" data-i18n="slideKicker1">01 / SOFTWARE DEVELOPMENT</span><div class="slide-badge" data-i18n="slideBadge1">CORE FOCUS</div><h3>C<span class="title-dot">#</span><span class="slide-subtitle" data-i18n="slideSubtitle1">Development</span></h3><p data-i18n="slideDesc1">2023 bis Okt. 2026 C#-Softwareentwicklung bei AVL Graz im CRETA-Umfeld.</p><div class="tech-chips"><span>C#</span><span>Software Development</span><span>CRETA</span></div></div><div aria-hidden="true" class="slide-art slide-art-csharp"><div class="slide-art-orbit"><div class="orbit-inner">C#</div></div><span class="art-coordinate">{ 001 }</span></div></article>
 </div>
 <div class="carousel-item">
-<article class="skill-slide skill-slide-web"><div class="skill-slide-content"><span class="slide-kicker" data-i18n="slideKicker2">02 / APPLICATION &amp; WEB</span><div class="slide-badge" data-i18n="slideBadge2">WEB STACK</div><h3>Web<span class="title-dot">.</span><span class="slide-subtitle" data-i18n="slideSubtitle2">Technologies</span></h3><p data-i18n="slideDesc2">Application &amp; Web Development als Qualifizierungsschwerpunkt, ergänzt durch HTML, CSS und JavaScript.</p><div class="tech-chips"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Application Development</span></div></div><div aria-hidden="true" class="slide-art slide-art-web"><div class="web-braces"><span>&lt;</span><span>/</span><span>&gt;</span></div><span class="art-coordinate">{ 002 }</span></div></article>
+<article class="skill-slide skill-slide-web"><div class="skill-slide-content"><span class="slide-kicker" data-i18n="slideKicker2">02 / APPLICATION &amp; WEB</span><div class="slide-badge" data-i18n="slideBadge2">WEB STACK</div><h3>Web<span class="title-dot">.</span><span class="slide-subtitle" data-i18n="slideSubtitle2">Technologies</span></h3><p data-i18n="slideDesc2">Application &amp; Web Development als Qualifizierungsschwerpunkt, ergänzt durch HTML, CSS und JavaScript.</p><div class="tech-chips"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Application Development</span></div></div><div aria-hidden="true" class="slide-art slide-art-web"><div class="web-braces"><svg viewBox="0 0 200 200" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke-linecap="square" stroke-linejoin="miter" stroke-width="11"><path d="M78 74 L43 100 L78 126" stroke="currentColor"/><path d="M123 74 L158 100 L123 126" stroke="currentColor"/><path d="M114 60 L87 140" stroke="var(--muted)"/></g></svg></div><span class="art-coordinate">{ 002 }</span></div></article>
 </div>
 <div class="carousel-item">
 <article class="skill-slide skill-slide-ai"><div class="skill-slide-content"><span class="slide-kicker" data-i18n="slideKicker3">03 / AI &amp; TOOLING</span><div class="slide-badge" data-i18n="slideBadge3">WORKFLOW</div><h3>AI<span class="title-dot">.</span><span class="slide-subtitle" data-i18n="slideSubtitle3">&amp; Tooling</span></h3><p data-i18n="slideDesc3">Fortgeschrittene Nutzung von AI-Tools; ergänzt durch Linux, JIRA und Datenbankkenntnisse.</p><div class="tech-chips"><span>Advanced AI Handling</span><span>Linux</span><span>JIRA</span><span data-i18n="chipDatabase">Datenbanken</span></div></div><div aria-hidden="true" class="slide-art slide-art-ai"><div class="ai-core"><i></i><i></i><i></i><i></i><span>AI</span></div><span class="art-coordinate">{ 003 }</span></div></article>
